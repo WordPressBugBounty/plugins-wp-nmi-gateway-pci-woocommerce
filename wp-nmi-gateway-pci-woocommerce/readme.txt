@@ -1,13 +1,13 @@
 === WP NMI Gateway PCI for WooCommerce ===
 Contributors: mohsinoffline
 Donate link: https://wpgateways.com/support/send-payment/
-Tags: nmi, network merchants, payment gateway, woocommerce, pci, pci-dss, tokenization, woocommerce subscriptions, recurring payments, pre order
+Tags: nmi, network merchants, payment gateway, woocommerce, pci
 Plugin URI: https://bitbucket.org/pledged/wc-nmi-pci-pro
 Author URI: https://pledgedplugins.com
 Requires at least: 4.4
 Tested up to: 6.6
 Requires PHP: 5.6
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,6 +40,7 @@ This plugin enables you to use the NMI payment gateway and accept credit cards d
 > * **3D Secure 2 Card Verification:**  Optionally, enable 3D Secure 2 card verification and make your site Strong Customer Authentication (SCA) compliant.
 > * **ACH Payments:**  Fully supports eCheck payments via ACH network.
 > * **Pay via Saved Cards:** Enable option to use saved card details on the gateway servers for quicker checkout. No sensitive card data is stored on the website!
+> * **One Click Upsells:** Compatible with  [FunnelKit (formerly WooFunnels) One Click Upsells](https://funnelkit.com/woocommerce-one-click-upsells-upstroke/).
 >
 > [Click here](https://pledgedplugins.com/products/nmi-payment-gateway-woocommerce/) for Pricing details.
 
@@ -73,6 +74,12 @@ That's it! You are ready to accept credit cards with your NMI merchant account n
 A valid SSL certificate is required to ensure your customer credit card details are safe and make your site PCI DSS compliant. This plugin does not store the customer credit card numbers or sensitive information on your website.
 
 == Changelog ==
+
+= 1.2.2 =
+Set order status to Failed only once on unsuccessful capture from Edit Order screen
+Added "Capture authorized transaction on status change" option
+Prevent blocking the billing details area for distraction free checkout
+Updated "WC tested up to" header to 9.4
 
 = 1.2.1 =
 Fixed error message not showing on block checkout

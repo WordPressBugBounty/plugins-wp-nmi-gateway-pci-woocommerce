@@ -14,6 +14,7 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 	public $testmode;
 	public $api_keys;
 	public $capture;
+	public $capture_on_status_change;
 	public $private_key;
 	public $public_key;
 	public $username;
@@ -33,7 +34,7 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 	public function __construct() {
 		$this->id                   = 'nmi';
 		$this->method_title         = __( 'NMI', 'wc-nmi' );
-		$this->method_description 	= __( 'NMI works by adding credit card fields on the checkout and then sending the details to the gateway for processing the transactions.', 'wc-nmi' ) . '<h3>' . __( 'Upgrade to Enterprise', 'wc-nmi' ) . '</h3>' . sprintf( __( 'Enterprise version is a full blown plugin that provides full support for processing subscriptions, pre-orders, payments via saved cards or eCheck accounts and refunds directly from your website. The credit card or eCheck account information is saved in your gateway merchant account and is reused to charge future orders, recurring payments or pre-orders at a later time. It also has an option to enable 3D Secure 2 card verification and make your site Strong Customer Authentication (SCA) compliant. <br/><br/><a href="%s" target="_blank">Click here</a> to upgrade to Enterprise version or to know more about it.', 'wc-nmi' ), 'https://pledgedplugins.com/products/nmi-payment-gateway-woocommerce/' );
+		$this->method_description 	= __( 'NMI works by adding credit card fields on the checkout and then sending the details to the gateway for processing the transactions.', 'wc-nmi' ) . '<h3>' . __( 'Upgrade to Enterprise', 'wc-nmi' ) . '</h3>' . sprintf( __( 'Enterprise version is a full blown plugin that provides support for <strong>processing subscriptions, pre-orders, one click upsells and payments via saved cards or eCheck accounts</strong>. It also has an option to <strong>enable 3D Secure 2 card verification</strong> and make your site Strong Customer Authentication (SCA) compliant. Some of these functionalities require <strong>other premium plugins</strong> that are mentioned on the page linked below. No card details or other sensitive data is stored on your site.<br/><br/><a href="%s" target="_blank">Click here</a> to upgrade to Enterprise version or to know more about it.', 'wc-nmi' ), 'https://pledgedplugins.com/products/nmi-payment-gateway-woocommerce/' );
 		$this->has_fields           = true;
 		$this->supports             = array( 'products', 'refunds' );
 
@@ -44,21 +45,22 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 		$this->init_settings();
 
 		// Get setting values.
-		$this->title       		  	= $this->get_option( 'title' );
-		$this->description 		  	= $this->get_option( 'description' );
-		$this->enabled     		  	= $this->get_option( 'enabled' );
-		$this->testmode    		  	= $this->get_option( 'testmode' ) === 'yes';
-		$this->api_keys    		  	= $this->get_option( 'api_keys' ) === 'yes';
-		$this->capture     		  	= $this->get_option( 'capture', 'yes' ) === 'yes';
-		$this->private_key	   		= $this->get_option( 'private_key' );
-		$this->public_key	   		= $this->get_option( 'public_key' );
-		$this->username	   		  	= $this->get_option( 'username' );
-		$this->password	   		  	= $this->get_option( 'password' );
-		$this->logging     		  	= $this->get_option( 'logging' ) === 'yes';
-		$this->debugging   		  	= $this->get_option( 'debugging' ) === 'yes';
-		$this->line_items  		  	= $this->get_option( 'line_items' ) === 'yes';
-		$this->allowed_card_types 	= $this->get_option( 'allowed_card_types', array() );
-		$this->customer_receipt   	= $this->get_option( 'customer_receipt' ) === 'yes';
+		$this->title       		  		= $this->get_option( 'title' );
+		$this->description 		  		= $this->get_option( 'description' );
+		$this->enabled     		  		= $this->get_option( 'enabled' );
+		$this->testmode    		  		= $this->get_option( 'testmode' ) === 'yes';
+		$this->api_keys    		  		= $this->get_option( 'api_keys' ) === 'yes';
+		$this->capture     		  		= $this->get_option( 'capture', 'yes' ) === 'yes';
+		$this->capture_on_status_change = $this->get_option( 'capture_on_status_change', 'yes' ) === 'yes';
+		$this->private_key	   			= $this->get_option( 'private_key' );
+		$this->public_key	   			= $this->get_option( 'public_key' );
+		$this->username	   		  		= $this->get_option( 'username' );
+		$this->password	   		  		= $this->get_option( 'password' );
+		$this->logging     		  		= $this->get_option( 'logging' ) === 'yes';
+		$this->debugging   		  		= $this->get_option( 'debugging' ) === 'yes';
+		$this->line_items  		  		= $this->get_option( 'line_items' ) === 'yes';
+		$this->allowed_card_types 		= $this->get_option( 'allowed_card_types', array() );
+		$this->customer_receipt   		= $this->get_option( 'customer_receipt' ) === 'yes';
 
 		if ( $this->testmode ) {
 			$this->description .= ' ' . sprintf( __( '<br /><br /><strong>TEST MODE ENABLED</strong><br /> In test mode, you can use the card number 4111111111111111 with any CVC and a valid expiration date or check the documentation "<a href="%s">NMI Direct Post API</a>" for more card numbers.', 'wc-nmi' ), 'https://secure.nmi.com/merchants/resources/integration/download.php?document=directpost' );
@@ -177,7 +179,17 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
                             }
                         } );
 
+						$( document.body ).on( 'change', '#woocommerce_nmi_capture', function() {
+                            let field_capture_on_status_change = $( '#woocommerce_nmi_capture_on_status_change' ).parents( 'tr' ).eq( 0 );
+                            if ( $( this ).is( ':checked' ) ) {
+                                field_capture_on_status_change.hide();
+                            } else {
+                                field_capture_on_status_change.show();
+                            }
+                        });
+
                         $( '#woocommerce_nmi_api_keys' ).change();
+						$( '#woocommerce_nmi_capture' ).change();
                     }
                 };
 
@@ -275,6 +287,13 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 				'label'       => __( 'Capture charge immediately', 'wc-nmi' ),
 				'type'        => 'checkbox',
 				'description' => __( 'Whether or not to immediately capture the charge. When unchecked, the charge issues an authorization and will need to be captured later.', 'wc-nmi' ),
+				'default'     => 'yes'
+			),
+			'capture_on_status_change' => array(
+				'title'       => '',
+				'label'       => __( 'Capture authorized transaction on status change', 'wc-nmi' ),
+				'type'        => 'checkbox',
+				'description' => __( 'Whether or not to capture the authorized transaction when you change the order status from "On Hold" to "Processing" or "Completed". Disable if you prefer to capture transactions in the gateway dashboard.', 'wc-nmi' ),
 				'default'     => 'yes'
 			),
 			'logging' => array(

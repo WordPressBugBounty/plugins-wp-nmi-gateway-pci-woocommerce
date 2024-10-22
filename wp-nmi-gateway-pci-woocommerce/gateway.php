@@ -3,13 +3,13 @@
 Plugin Name: WP NMI Gateway PCI for WooCommerce
 Plugin URI: https://bitbucket.org/pledged/wc-nmi-pci-pro
 Description: A PCI compliant payment gateway for NMI. An NMI account and a server with cURL, SSL support, and a valid SSL certificate is required (for security reasons) for this gateway to function. Requires WC 3.3+
-Version: 1.2.1
+Version: 1.2.2
 Author: Pledged Plugins
 Author URI: https://pledgedplugins.com
 Text Domain: wc-nmi
 Domain Path: /languages
 WC requires at least: 3.3
-WC tested up to: 9.2
+WC tested up to: 9.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Requires Plugins: woocommerce
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WC_NMI_PCI_VERSION', '1.2.1' );
+define( 'WC_NMI_PCI_VERSION', '1.2.2' );
 define( 'WC_NMI_PCI_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/templates/' );
 define( 'WC_NMI_PCI_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'WC_NMI_PCI_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
@@ -236,7 +236,7 @@ class WC_NMI_PCI {
 	 */
 	public function admin_notices() {
 
-		foreach ( (array) $this->notices as $notice_key => $notice ) {
+		foreach ( (array) $this->notices as $notice ) {
 			echo "<div class='" . esc_attr( $notice['class'] ) . "'><p>";
 			echo wp_kses( $notice['message'], array( 'a' => array( 'href' => array() ) ) );
 			echo '</p></div>';
@@ -256,7 +256,7 @@ class WC_NMI_PCI {
 			$charge   = $order->get_meta( '_nmi_charge_id' );
 			$captured = $order->get_meta( '_nmi_charge_captured' );
 
-			if ( $charge && $captured == 'no' ) {
+			if ( $gateway->capture_on_status_change && $charge && $captured == 'no' ) {
 
 				$gateway->log( "Info: Beginning capture payment for order $order_id for the amount of {$order->get_total()}" );
 
@@ -278,7 +278,13 @@ class WC_NMI_PCI {
 				$response = $gateway->nmi_request( $args );
 
 				if ( is_wp_error( $response ) ) {
-					$order->add_order_note( __( 'Unable to capture charge!', 'wc-nmi' ) . ' ' . $response->get_error_message() );
+					if( $order->get_meta( '_nmi_capture_failed' ) == 'yes' ) {
+						$order->add_order_note( sprintf( __( "<strong>Unable to capture charge!</strong> Please <strong>DO NOT FULFIL THE ORDER</strong> if the amount cannot be captured in the gateway account manually or by changing the status. In that case, set status to Failed manually and do not fulfil. \n\nNMI failure reason: %s \n\n", 'wc-nmi' ), $response->get_error_message() ) );
+					} else {
+						$order->update_status( 'failed', sprintf( __( "<strong>Unable to capture charge!</strong> The order status is set to <strong>Failed</strong> the first time to draw your attention. If the next attempt fails, your intended order status will still take place. \n\nPlease double-check that the amount is captured in the gateway account before fulfilling the order. \n\nNMI failure reason: %s \n\n", 'wc-nmi' ), $response->get_error_message() ) );
+						$order->update_meta_data( '_nmi_capture_failed', 'yes' );
+						$order->save();
+					}
 				} else {
 					$complete_message = sprintf( __( 'NMI charge complete (Charge ID: %s)', 'wc-nmi' ), $response['transactionid'] );
  					$order->add_order_note( $complete_message );

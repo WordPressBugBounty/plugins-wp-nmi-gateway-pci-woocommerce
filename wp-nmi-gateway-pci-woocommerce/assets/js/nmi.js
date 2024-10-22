@@ -56,6 +56,7 @@ jQuery( function( $ ) {
 					},
 					"fieldsAvailableCallback": function () {
 						wc_nmi_form.unblock();
+						wc_nmi_form.unblockPayment();
 						console.log("Collect.js loaded the fields onto the form");
 					},
 					'callback': function (response) {
@@ -122,7 +123,7 @@ jQuery( function( $ ) {
 				);
 
             if ( wc_nmi_form.isNMIChosen() ) {
-                wc_nmi_form.block();
+                wc_nmi_form.blockPayment();
                 wc_nmi_form.createElements();
             }
 
@@ -130,7 +131,7 @@ jQuery( function( $ ) {
 			$( 'body' ).on( 'click', 'a[href="#cfw-payment-method"], a[data-tab="#cfw-payment-method"], a[data-step="step--payment"], a.ro-tab-2, a.ro-btn-2, button.wfacp_next_page_button', function() {
                 // Don't re-mount if already mounted in DOM.
                 if ( wc_nmi_form.isNMIChosen() ) {
-                    wc_nmi_form.block();
+                    wc_nmi_form.blockPayment();
                     wc_nmi_form.createElements();
                 }
             } );
@@ -141,9 +142,9 @@ jQuery( function( $ ) {
 			 */
 			if ( 'yes' === wc_nmi_params.is_checkout ) {
 				$( document.body ).on( 'updated_checkout', function() {
-					// Re-mount  on updated checkou
+					// Re-mount  on updated checkout
                     if ( wc_nmi_form.isNMIChosen() ) {
-                        wc_nmi_form.block();
+                        wc_nmi_form.blockPayment();
 				        wc_nmi_form.createElements();
                     }
 
@@ -152,7 +153,7 @@ jQuery( function( $ ) {
 
             $( document.body ).on( 'payment_method_selected', function() {
                 // Don't re-mount if already mounted in DOM.
-                if ( wc_nmi_form.isNMIChosen() ) {
+                if ( wc_nmi_form.isNMIChosen() && ! $( '#nmi-card-number-element' ).children().length ) {
                     wc_nmi_form.block();
                     wc_nmi_form.createElements();
                 }
@@ -188,6 +189,19 @@ jQuery( function( $ ) {
 
 		unblock: function() {
 			wc_nmi_form.form.unblock();
+		},
+
+		blockPayment: function() {
+			wc_nmi_form.form.find('#payment, .wfacp_payment').block( {
+				message: null,
+				overlayCSS: {
+					background: '#fff',
+					opacity: 0.6
+				}
+			} );
+		},
+		unblockPayment: function() {
+			wc_nmi_form.form.find('#payment, .wfacp_payment').unblock();
 		},
 
         getSelectedPaymentElement: function() {
@@ -229,6 +243,7 @@ jQuery( function( $ ) {
 				}, 200 );
 			}
 			wc_nmi_form.unblock();
+			wc_nmi_form.unblockPayment();
 		},
 
 		onSubmit: function( e ) {
