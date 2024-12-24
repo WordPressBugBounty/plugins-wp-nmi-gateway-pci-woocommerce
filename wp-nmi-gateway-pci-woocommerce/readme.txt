@@ -5,9 +5,9 @@ Tags: nmi, network merchants, payment gateway, woocommerce, pci
 Plugin URI: https://bitbucket.org/pledged/wc-nmi-pci-pro
 Author URI: https://pledgedplugins.com
 Requires at least: 4.4
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,17 +75,22 @@ A valid SSL certificate is required to ensure your customer credit card details 
 
 == Changelog ==
 
+= 1.2.3 =
+* Added block checkout styling improvements
+* Updated compatibility info to WordPress 6.7
+* Updated "WC tested up to" header to 9.5
+
 = 1.2.2 =
-Set order status to Failed only once on unsuccessful capture from Edit Order screen
-Added "Capture authorized transaction on status change" option
-Prevent blocking the billing details area for distraction free checkout
-Updated "WC tested up to" header to 9.4
+* Set order status to Failed only once on unsuccessful capture from Edit Order screen
+* Added "Capture authorized transaction on status change" option
+* Prevent blocking the billing details area for distraction free checkout
+* Updated "WC tested up to" header to 9.4
 
 = 1.2.1 =
-Fixed error message not showing on block checkout
-Fixed issue with collect.js being enqueued everywhere
-Updated compatibility info to WordPress 6.6
-Updated "WC tested up to" header to 9.2
+* Fixed error message not showing on block checkout
+* Fixed issue with collect.js being enqueued everywhere
+* Updated compatibility info to WordPress 6.6
+* Updated "WC tested up to" header to 9.2
 
 = 1.2.0 =
 * Added checkout block payments support

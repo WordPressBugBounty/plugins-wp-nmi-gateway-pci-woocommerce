@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP NMI Gateway PCI for WooCommerce\n"
-"POT-Creation-Date: 2024-10-14 22:16+0530\n"
-"PO-Revision-Date: 2024-10-14 22:15+0530\n"
+"POT-Creation-Date: 2024-12-18 20:43+0530\n"
+"PO-Revision-Date: 2024-12-18 20:43+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -384,15 +384,15 @@ msgstr ""
 msgid "If enabled, the customer will be sent an email receipt from NMI."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:374 src/nmi-credit-card.js:165
+#: includes/class-wc-gateway-nmi.php:374 src/nmi-credit-card.js:166
 msgid "Card Number"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:385 src/nmi-credit-card.js:177
+#: includes/class-wc-gateway-nmi.php:385 src/nmi-credit-card.js:178
 msgid "Expiry Date"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:393 src/nmi-credit-card.js:189
+#: includes/class-wc-gateway-nmi.php:393 src/nmi-credit-card.js:190
 msgid "Card Code (CVC)"
 msgstr ""
 
@@ -574,7 +574,7 @@ msgstr ""
 msgid "NMI payment method"
 msgstr ""
 
-#: src/nmi-credit-card.js:202
+#: src/nmi-credit-card.js:203
 msgid "Loading payment fields…"
 msgstr ""
 
