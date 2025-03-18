@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP NMI Gateway PCI for WooCommerce\n"
-"POT-Creation-Date: 2024-12-18 20:43+0530\n"
-"PO-Revision-Date: 2024-12-18 20:43+0530\n"
+"POT-Creation-Date: 2025-03-17 21:08+0530\n"
+"PO-Revision-Date: 2025-03-17 21:08+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: build/index.js:452 includes/class-wc-nmi-blocks-support.php:158
+#: build/index.js:1823 includes/class-wc-nmi-blocks-support.php:158
 #: src/utils.js:52
 msgid "Credit / Debit Card"
 msgstr ""
@@ -487,25 +487,25 @@ msgstr ""
 msgid "Gateway Error: %s"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:588
+#: includes/class-wc-gateway-nmi.php:588 includes/class-wc-gateway-nmi.php:590
 #, php-format
 msgid "NMI failure reason: %s"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:651 includes/class-wc-gateway-nmi.php:663
+#: includes/class-wc-gateway-nmi.php:653 includes/class-wc-gateway-nmi.php:665
 msgid "There was an error with the gateway response."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:658
+#: includes/class-wc-gateway-nmi.php:660
 #, php-format
 msgid "Unrecognized response from the gateway: %s"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:668
+#: includes/class-wc-gateway-nmi.php:670
 msgid "Your card has been declined."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:722
+#: includes/class-wc-gateway-nmi.php:724
 #, php-format
 msgid "Refunded %s - Refund ID: %s - Reason: %s"
 msgstr ""

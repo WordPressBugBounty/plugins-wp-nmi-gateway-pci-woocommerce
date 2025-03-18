@@ -586,7 +586,9 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 
 			if( is_wp_error( $response ) && $response = $response->get_error_data() ) {
 				$order->add_order_note( sprintf( __( 'NMI failure reason: %s', 'wc-nmi' ), $response['response_code'] . ' - ' . $response['responsetext'] ) );
-            }
+            } else {
+				$order->add_order_note( sprintf( __( "NMI failure reason: %s", 'wc-nmi' ), $e->getMessage() ) );
+			}
 
 			do_action( 'wc_gateway_nmi_process_payment_error', $e, $order );
 
