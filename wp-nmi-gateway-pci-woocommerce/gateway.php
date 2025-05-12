@@ -3,7 +3,7 @@
 Plugin Name: WP NMI Gateway PCI for WooCommerce
 Plugin URI: https://bitbucket.org/pledged/wc-nmi-pci-pro
 Description: A PCI compliant payment gateway for NMI. An NMI account and a server with cURL, SSL support, and a valid SSL certificate is required (for security reasons) for this gateway to function. Requires WC 3.3+
-Version: 1.2.4
+Version: 1.2.5
 Author: Pledged Plugins
 Author URI: https://pledgedplugins.com
 Text Domain: wc-nmi
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WC_NMI_PCI_VERSION', '1.2.4' );
+define( 'WC_NMI_PCI_VERSION', '1.2.5' );
 define( 'WC_NMI_PCI_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/templates/' );
 define( 'WC_NMI_PCI_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'WC_NMI_PCI_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
@@ -73,7 +73,7 @@ class WC_NMI_PCI {
 
 		add_action( 'admin_init', array( $this, 'check_environment' ), 11 );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ), 15 );
-		add_action( 'plugins_loaded', array( $this, 'init' ), 11 );
+		add_action( 'plugins_loaded', array( $this, 'init_environment' ), 11 );
 	}
 
 	public function settings_url() {
@@ -111,7 +111,6 @@ class WC_NMI_PCI {
 
         include_once( dirname( __FILE__ ) . '/includes/class-wc-gateway-nmi.php' );
 
-        load_plugin_textdomain( 'wc-nmi', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
         add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateways' ) );
 
     }
@@ -127,7 +126,7 @@ class WC_NMI_PCI {
 	/**
 	 * Init localisations and files
 	 */
-	public function init() {
+	public function init_environment() {
 
         if( class_exists( 'WC_NMI_License_Updates' ) ) {
             return;
@@ -139,8 +138,10 @@ class WC_NMI_PCI {
         require_once( 'includes/class-wc-gateway-nmi-logger.php' );
 
         add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ), 11 );
-		add_action( 'woocommerce_order_status_processing', array( $this, 'capture_payment' ) );
-		add_action( 'woocommerce_order_status_completed', array( $this, 'capture_payment' ) );
+		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+
+		add_action( 'woocommerce_order_status_processing', array( $this, 'capture_payment' ), 10, 3 );
+		add_action( 'woocommerce_order_status_completed', array( $this, 'capture_payment' ), 10, 3 );
 		add_action( 'woocommerce_order_status_cancelled', array( $this, 'cancel_payment' ) );
 		add_action( 'woocommerce_order_status_refunded', array( $this, 'cancel_payment' ) );
 
@@ -243,12 +244,18 @@ class WC_NMI_PCI {
 		}
 	}
 
+	public function load_plugin_textdomain() {
+		load_plugin_textdomain( 'wc-nmi', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+	}
+
 	/**
 	 * Capture payment when the order is changed from on-hold to complete or processing
 	 *
-	 * @param  int $order_id
+	 * @param int $order_id
+	 * @param $order
+	 * @param $status_transition
 	 */
-	public function capture_payment( $order_id ) {
+	public function capture_payment( $order_id, $order, $status_transition ) {
 		$order = wc_get_order( $order_id );
 		$gateway = new WC_Gateway_NMI();
 
@@ -256,7 +263,7 @@ class WC_NMI_PCI {
 			$charge   = $order->get_meta( '_nmi_charge_id' );
 			$captured = $order->get_meta( '_nmi_charge_captured' );
 
-			if ( $gateway->capture_on_status_change && $charge && $captured == 'no' ) {
+			if ( apply_filters( 'wc_nmi_capture_on_status_change', $gateway->capture_on_status_change, $order, $status_transition ) && $charge && $captured == 'no' ) {
 
 				$gateway->log( "Info: Beginning capture payment for order $order_id for the amount of {$order->get_total()}" );
 
@@ -286,11 +293,13 @@ class WC_NMI_PCI {
 						$order->save();
 					}
 				} else {
-					$complete_message = sprintf( __( 'NMI charge complete (Charge ID: %s)', 'wc-nmi' ), $response['transactionid'] );
+					$complete_message = sprintf( __( 'NMI charge captured (Charge ID: %s).', 'wc-nmi' ), $response['transactionid'] );
  					$order->add_order_note( $complete_message );
 					$gateway->log( "Success: $complete_message" );
+
 					$order->update_meta_data( '_nmi_charge_captured', 'yes' );
 					$order->update_meta_data( 'NMI Payment ID', $response['transactionid'] );
+
 					$order->set_transaction_id( $response['transactionid'] );
 					$order->save();
 				}
@@ -330,9 +339,10 @@ class WC_NMI_PCI {
 				if ( is_wp_error( $response ) ) {
 					$order->add_order_note( __( 'Unable to refund charge!', 'wc-nmi' ) . ' ' . $response->get_error_message() );
 				} else {
-					$cancel_message = sprintf( __( 'NMI charge refunded (Charge ID: %s)', 'wc-nmi' ), $response['transactionid'] );
+					$cancel_message = sprintf( __( 'NMI charge refunded (Charge ID: %s).', 'wc-nmi' ), $response['transactionid'] );
  					$order->add_order_note( $cancel_message );
 					$gateway->log( "Success: $cancel_message" );
+
 					$order->delete_meta_data( '_nmi_charge_captured' );
 					$order->delete_meta_data( '_nmi_charge_id' );
 					$order->save();

@@ -545,7 +545,7 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 					$order->payment_complete( $response['transactionid'] );
 
 					// Add order note
-					$complete_message = sprintf( __( 'NMI charge complete (Charge ID: %s)', 'wc-nmi' ), $response['transactionid'] );
+					$complete_message = sprintf( __( 'NMI charge completed (Charge ID: %s).', 'wc-nmi' ), $response['transactionid'] );
 					$order->add_order_note( $complete_message );
 					$this->log( "Success: $complete_message" );
 
@@ -721,10 +721,11 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 			$this->log( "Gateway Error: " . $response->get_error_message() );
 			return $response;
 		} elseif ( ! empty( $response['transactionid'] ) ) {
-			$refund_message = sprintf( __( 'Refunded %s - Refund ID: %s - Reason: %s', 'wc-nmi' ), $amount, $response['transactionid'], $reason );
+			$refund_message = sprintf( __( 'Refunded %s - Refund ID: %s - Reason: %s', 'wc-nmi' ), wc_price( $args['amount'], array( 'currency' => $args['currency'] ) ), $response['transactionid'], $reason );
 			$order->add_order_note( $refund_message );
 			$order->save();
-			$this->log( "Success: " . html_entity_decode( strip_tags( $refund_message ) ) );
+
+			$this->log( 'Success: ' . wp_strip_all_tags( $refund_message ) );
 			return true;
 		}
 	}

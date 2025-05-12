@@ -5,16 +5,26 @@ if ( ! class_exists( 'WC_Abstract_Privacy' ) ) {
 }
 
 class WC_NMI_Privacy extends WC_Abstract_Privacy {
+
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		parent::__construct( __( 'NMI', 'wc-nmi' ) );
+		parent::__construct();
+
+		// Initialize data exporters and erasers.
+		add_action( 'init', array( $this, 'register_erasers_exporters' ) );
+		add_filter( 'woocommerce_get_settings_account', array( $this, 'account_settings' ) );
+	}
+
+	/**
+	 * Initial registration of privacy erasers and exporters.
+	 */
+	public function register_erasers_exporters() {
+		$this->name = __( 'NMI', 'wc-nmi' );
 
 		$this->add_exporter( 'wc-nmi-order-data', __( 'WooCommerce NMI Order Data', 'wc-nmi' ), array( $this, 'order_data_exporter' ) );
 		$this->add_eraser( 'wc-nmi-order-data', __( 'WooCommerce NMI Data', 'wc-nmi' ), array( $this, 'order_data_eraser' ) );
-
-		add_filter( 'woocommerce_get_settings_account', array( $this, 'account_settings' ) );
 	}
 
 	/**
@@ -181,30 +191,32 @@ class WC_NMI_Privacy extends WC_Abstract_Privacy {
 		$retention  = wc_parse_relative_date_option( get_option( 'woocommerce_gateway_nmi_retention' ) );
 		$is_expired = false;
 		$time_span  = time() - strtotime( $created_date );
-		if ( empty( $retention ) || empty( $created_date ) ) {
+
+		if ( empty( $retention['number'] ) || empty( $created_date ) ) {
 			return false;
 		}
+
 		switch ( $retention['unit'] ) {
 			case 'days':
-				$retention = $retention['number'] * DAY_IN_SECONDS;
+				$retention = (int) $retention['number'] * DAY_IN_SECONDS;
 				if ( $time_span > $retention ) {
 					$is_expired = true;
 				}
 				break;
 			case 'weeks':
-				$retention = $retention['number'] * WEEK_IN_SECONDS;
+				$retention = (int) $retention['number'] * WEEK_IN_SECONDS;
 				if ( $time_span > $retention ) {
 					$is_expired = true;
 				}
 				break;
 			case 'months':
-				$retention = $retention['number'] * MONTH_IN_SECONDS;
+				$retention = (int) $retention['number'] * MONTH_IN_SECONDS;
 				if ( $time_span > $retention ) {
 					$is_expired = true;
 				}
 				break;
 			case 'years':
-				$retention = $retention['number'] * YEAR_IN_SECONDS;
+				$retention = (int) $retention['number'] * YEAR_IN_SECONDS;
 				if ( $time_span > $retention ) {
 					$is_expired = true;
 				}
