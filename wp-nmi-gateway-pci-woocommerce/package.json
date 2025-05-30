@@ -1,6 +1,6 @@
 {
 	"name": "wp-nmi-gateway-pci-woocommerce",
-	"version": "1.2.5",
+	"version": "1.2.6",
 	"author": "Pledged Plugins",
 	"license": "GPL-3.0+",
 	"main": "build/index.js",
