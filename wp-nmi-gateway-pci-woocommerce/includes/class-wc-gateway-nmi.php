@@ -36,7 +36,12 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 		$this->method_title         = __( 'NMI', 'wc-nmi' );
 		$this->method_description 	= __( 'NMI works by adding credit card fields on the checkout and then sending the details to the gateway for processing the transactions.', 'wc-nmi' ) . '<h3>' . __( 'Upgrade to Enterprise', 'wc-nmi' ) . '</h3>' . sprintf( __( 'Enterprise version is a full blown plugin that provides support for <strong>processing subscriptions, pre-orders, one click upsells and payments via saved cards or eCheck accounts</strong>. It also has an option to <strong>enable 3D Secure 2 card verification</strong> and make your site Strong Customer Authentication (SCA) compliant. Some of these functionalities require <strong>other premium plugins</strong> that are mentioned on the page linked below. No card details or other sensitive data is stored on your site.<br/><br/><a href="%s" target="_blank">Click here</a> to upgrade to Enterprise version or to know more about it.', 'wc-nmi' ), 'https://pledgedplugins.com/products/nmi-payment-gateway-woocommerce/' );
 		$this->has_fields           = true;
-		$this->supports             = array( 'products', 'refunds' );
+		$this->supports             = array(
+			'products',
+			'refunds',
+			'wcapgp_apple_pay',
+			'wcapgp_google_pay',
+		);
 
 		// Load the form fields
 		$this->init_form_fields();
@@ -484,6 +489,10 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 
 			if( $js_response = $this->get_nmi_js_response() ) {
 				$post_data['payment_token'] = $js_response['token'];
+			} elseif( isset( $_POST['wcapgp_google_pay_payment_data'] ) ) {
+				$post_data['googlepay_payment_data'] = base64_decode( wc_clean( $_POST['wcapgp_google_pay_payment_data'] ) );
+			} elseif( isset( $_POST['wcapgp_apple_pay_payment_data'] ) ) {
+				$post_data['applepay_payment_data'] = base64_decode( wc_clean( $_POST['wcapgp_apple_pay_payment_data'] ) );
 			} else {
 				$expiry = explode( ' / ', wc_clean( $_POST['nmi-card-expiry'] ) );
 				$expiry[1] = substr( $expiry[1], -2 );
@@ -844,6 +853,12 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 			unset( $name_array[6] );
 		}
 		return admin_url( 'admin.php?page=wc-status&tab=logs&view=single_file&file_id=' . implode( '-', $name_array ) );
+	}
+
+	public function get_params_google_pay() {
+		return apply_filters( 'wc_nmi_params_google_pay', array(
+			'gateway' => 'gatewayservices'
+		) );
 	}
 
 }

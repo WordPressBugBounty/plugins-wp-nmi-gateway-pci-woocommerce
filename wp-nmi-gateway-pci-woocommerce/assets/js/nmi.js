@@ -14,7 +14,7 @@ jQuery( function( $ ) {
 		 */
 		createElements: function() {
 
-			const customCss = ! ( $('#cfw-payment-method').length || $('.woolentor-step--payment').length || $('.avada-checkout').length || $('.ro-checkout-process').length || $('button.wfacp_next_page_button').length ) ? {} : {
+			const customCss = ! ( $('#cfw-payment-method').length || $('.woolentor-step--payment').length || $('.avada-checkout').length || $('.ro-checkout-process').length || $('button.wfacp_next_page_button').length ) ? { "pointer-events": "auto"} : {
 				"height": "30px"
             }
 
@@ -127,8 +127,8 @@ jQuery( function( $ ) {
                 wc_nmi_form.createElements();
             }
 
-		    // CheckoutWC and woolentor, La Forat theme
-			$( 'body' ).on( 'click', 'a[href="#cfw-payment-method"], a[data-tab="#cfw-payment-method"], a[data-step="step--payment"], a.ro-tab-2, a.ro-btn-2, button.wfacp_next_page_button', function() {
+		    // CheckoutWC and woolentor, La Forat theme, Avada multi step checkout
+			$( 'body' ).on( 'click', '.custom_checkout_page a[href="#next"], a[href="#cfw-payment-method"], a[data-tab="#cfw-payment-method"], a[data-step="step--payment"], a.ro-tab-2, a.ro-btn-2, button.wfacp_next_page_button, .woocommerce-checkout-nav a,.continue-checkout', function() {
                 // Don't re-mount if already mounted in DOM.
                 if ( wc_nmi_form.isNMIChosen() ) {
                     wc_nmi_form.blockPayment();

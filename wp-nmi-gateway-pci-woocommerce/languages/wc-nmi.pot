@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP NMI Gateway PCI for WooCommerce\n"
-"POT-Creation-Date: 2025-07-26 20:31+0530\n"
-"PO-Revision-Date: 2025-07-26 20:31+0530\n"
+"POT-Creation-Date: 2025-09-04 19:38+0530\n"
+"PO-Revision-Date: 2025-09-04 19:38+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -124,7 +124,7 @@ msgid ""
 "here</a> to upgrade to Enterprise version or to know more about it."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:66
+#: includes/class-wc-gateway-nmi.php:71
 #, php-format
 msgid ""
 "<br /><br /><strong>TEST MODE ENABLED</strong><br /> In test mode, you can "
@@ -133,26 +133,26 @@ msgid ""
 "for more card numbers."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:118
+#: includes/class-wc-gateway-nmi.php:123
 #, php-format
 msgid "NMI error: Please enter your Username <a href=\"%s\">here</a>"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:122
+#: includes/class-wc-gateway-nmi.php:127
 #, php-format
 msgid "NMI error: Please enter your Password <a href=\"%s\">here</a>"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:127
+#: includes/class-wc-gateway-nmi.php:132
 #, php-format
 msgid "NMI error: Please enter your Private Key <a href=\"%s\">here</a>"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:134
+#: includes/class-wc-gateway-nmi.php:139
 msgid "NMI error: Your Username and Password match. Please check and re-enter."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:140
+#: includes/class-wc-gateway-nmi.php:145
 #, php-format
 msgid ""
 "NMI is enabled, but a SSL certificate is not detected. Your checkout may not "
@@ -160,153 +160,153 @@ msgid ""
 "target=\"_blank\">SSL certificate</a>"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:229
+#: includes/class-wc-gateway-nmi.php:234
 msgid "Enable/Disable"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:230
+#: includes/class-wc-gateway-nmi.php:235
 msgid "Enable NMI"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:236
+#: includes/class-wc-gateway-nmi.php:241
 msgid "Title"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:238
+#: includes/class-wc-gateway-nmi.php:243
 msgid "This controls the title which the user sees during checkout."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:239
+#: includes/class-wc-gateway-nmi.php:244
 msgid "Credit card (NMI)"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:242
+#: includes/class-wc-gateway-nmi.php:247
 msgid "Description"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:244
+#: includes/class-wc-gateway-nmi.php:249
 msgid "This controls the description which the user sees during checkout."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:245
+#: includes/class-wc-gateway-nmi.php:250
 msgid "Pay with your credit card via NMI."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:248
+#: includes/class-wc-gateway-nmi.php:253
 msgid "Test mode"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:249
+#: includes/class-wc-gateway-nmi.php:254
 msgid "Enable Test Mode"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:251
+#: includes/class-wc-gateway-nmi.php:256
 msgid ""
 "Place the payment gateway in test mode. This will display test information "
 "on the checkout page."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:255
+#: includes/class-wc-gateway-nmi.php:260
 msgid "API Keys"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:256
+#: includes/class-wc-gateway-nmi.php:261
 msgid "Enable Authentication via API keys instead of login credentials."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:258
+#: includes/class-wc-gateway-nmi.php:263
 msgid ""
 "RECOMMENDED! This ensures you are using the most updated API method. If you "
 "disable this, the plugin will process via a legacy method and will need you "
 "to enter your login username and password."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:262
+#: includes/class-wc-gateway-nmi.php:267
 msgid "Private Key"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:264
+#: includes/class-wc-gateway-nmi.php:269
 msgid ""
 "Used for authenticating transactions. Make sure the private key you enter "
 "here has \"API\" permission enabled."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:268
+#: includes/class-wc-gateway-nmi.php:273
 msgid "Public Tokenization Key"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:270
+#: includes/class-wc-gateway-nmi.php:275
 msgid ""
 "Used for Collect.js tokenization for PCI compliance. Leave it empty ONLY if "
 "you are facing Javascript issues at checkout and the plugin will default to "
 "Direct Post method."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:274
+#: includes/class-wc-gateway-nmi.php:279
 msgid "Gateway Username"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:276
+#: includes/class-wc-gateway-nmi.php:281
 msgid "Legacy API method. Enter your NMI account username."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:280
+#: includes/class-wc-gateway-nmi.php:285
 msgid "Gateway Password"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:282
+#: includes/class-wc-gateway-nmi.php:287
 msgid "Legacy API method. Enter your NMI account password."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:286
+#: includes/class-wc-gateway-nmi.php:291
 msgid "Capture"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:287
+#: includes/class-wc-gateway-nmi.php:292
 msgid "Capture charge immediately"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:289
+#: includes/class-wc-gateway-nmi.php:294
 msgid ""
 "Whether or not to immediately capture the charge. When unchecked, the charge "
 "issues an authorization and will need to be captured later."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:294
+#: includes/class-wc-gateway-nmi.php:299
 msgid "Capture authorized transaction on status change"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:296
+#: includes/class-wc-gateway-nmi.php:301
 msgid ""
 "Whether or not to capture the authorized transaction when you change the "
 "order status from \"On Hold\" to \"Processing\" or \"Completed\". Disable if "
 "you prefer to capture transactions in the gateway dashboard."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:300
+#: includes/class-wc-gateway-nmi.php:305
 msgid "Logging"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:301
+#: includes/class-wc-gateway-nmi.php:306
 msgid "Log debug messages"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:303
+#: includes/class-wc-gateway-nmi.php:308
 #, php-format
 msgid ""
 "Save debug messages to the WooCommerce System Status log file <code>%s</"
 "code>."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:307
+#: includes/class-wc-gateway-nmi.php:312
 msgid "Gateway Debug"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:308
+#: includes/class-wc-gateway-nmi.php:313
 msgid "Log gateway requests and response to the WooCommerce System Status log."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:310
+#: includes/class-wc-gateway-nmi.php:315
 msgid ""
 "<strong>CAUTION! Enabling this option will write gateway requests including "
 "card numbers and CVV to the logs.</strong> Do not turn this on unless you "
@@ -316,203 +316,203 @@ msgid ""
 "resolved and the plugin logs should be deleted."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:310
+#: includes/class-wc-gateway-nmi.php:315
 #, php-format
 msgid ""
 "<a target=\"_blank\" href=\"%s\">Click here</a> to check and delete the full "
 "log file."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:314
+#: includes/class-wc-gateway-nmi.php:319
 msgid "Line Items"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:315
+#: includes/class-wc-gateway-nmi.php:320
 msgid "Enable Line Items"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:317
+#: includes/class-wc-gateway-nmi.php:322
 msgid "Add line item data to description sent to the gateway (eg. Item x qty)."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:321
+#: includes/class-wc-gateway-nmi.php:326
 msgid "Allowed Card types"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:324
+#: includes/class-wc-gateway-nmi.php:329
 msgid "Select the card types you want to allow payments from."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:327
+#: includes/class-wc-gateway-nmi.php:332
 #: includes/class-wc-nmi-blocks-support.php:171
 msgid "Visa"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:328
+#: includes/class-wc-gateway-nmi.php:333
 msgid "MasterCard"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:329
+#: includes/class-wc-gateway-nmi.php:334
 msgid "Discover"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:330
+#: includes/class-wc-gateway-nmi.php:335
 #: includes/class-wc-nmi-blocks-support.php:183
 msgid "American Express"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:331
+#: includes/class-wc-gateway-nmi.php:336
 msgid "Diners Club"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:332
+#: includes/class-wc-gateway-nmi.php:337
 #: includes/class-wc-nmi-blocks-support.php:197
 msgid "JCB"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:333
+#: includes/class-wc-gateway-nmi.php:338
 msgid "Maestro"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:337
+#: includes/class-wc-gateway-nmi.php:342
 msgid "Receipt"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:338
+#: includes/class-wc-gateway-nmi.php:343
 msgid "Send Gateway Receipt"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:340
+#: includes/class-wc-gateway-nmi.php:345
 msgid "If enabled, the customer will be sent an email receipt from NMI."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:374 src/nmi-credit-card.js:171
+#: includes/class-wc-gateway-nmi.php:379 src/nmi-credit-card.js:171
 msgid "Card Number"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:385 src/nmi-credit-card.js:183
+#: includes/class-wc-gateway-nmi.php:390 src/nmi-credit-card.js:183
 msgid "Expiry Date"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:393 src/nmi-credit-card.js:195
+#: includes/class-wc-gateway-nmi.php:398 src/nmi-credit-card.js:195
 msgid "Card Code (CVC)"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:423
+#: includes/class-wc-gateway-nmi.php:428
 msgid "Please accept the terms and conditions first"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:424
+#: includes/class-wc-gateway-nmi.php:429
 msgid "Please fill in required checkout fields first"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:425
+#: includes/class-wc-gateway-nmi.php:430
 msgid "Enter a card number."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:426
+#: includes/class-wc-gateway-nmi.php:431
 msgid "Enter an expiry date."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:427
+#: includes/class-wc-gateway-nmi.php:432
 msgid "CVC code is required."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:428
+#: includes/class-wc-gateway-nmi.php:433
 msgid "Invalid card number."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:429
+#: includes/class-wc-gateway-nmi.php:434
 msgid "Invalid card expiry date."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:430
+#: includes/class-wc-gateway-nmi.php:435
 msgid "Invalid card CVC."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:431
+#: includes/class-wc-gateway-nmi.php:436
 msgid "CVC"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:432
+#: includes/class-wc-gateway-nmi.php:437
 msgid "MM / YY"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:433
+#: includes/class-wc-gateway-nmi.php:438
 msgid "Card Type Not Accepted."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:434
+#: includes/class-wc-gateway-nmi.php:439
 msgid "(Ref: [ref])"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:435
+#: includes/class-wc-gateway-nmi.php:440
 msgid ""
 "The tokenization did not respond in the expected timeframe. Please make sure "
 "the fields are correctly filled in and submit the form again."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:436
+#: includes/class-wc-gateway-nmi.php:441
 msgid ""
 "Collect.js could not be loaded. Please try a different payment method or "
 "contact the administrator."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:475
+#: includes/class-wc-gateway-nmi.php:480
 msgid "Credit card details cannot be left incomplete."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:480
+#: includes/class-wc-gateway-nmi.php:485
 #, php-format
 msgid ""
 "Card type being used is not one of supported types in plugin settings: %s"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:481
+#: includes/class-wc-gateway-nmi.php:486
 msgid "Card Type Not Accepted"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:495
+#: includes/class-wc-gateway-nmi.php:504
 #, php-format
 msgid "%s - Order %s"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:548
+#: includes/class-wc-gateway-nmi.php:557
 #, php-format
 msgid "NMI charge completed (Charge ID: %s)."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:562
+#: includes/class-wc-gateway-nmi.php:571
 #, php-format
 msgid ""
 "NMI charge authorized (Charge ID: %s). Process order to take payment, or "
 "cancel to remove the pre-authorization."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:584 includes/class-wc-gateway-nmi.php:585
+#: includes/class-wc-gateway-nmi.php:593 includes/class-wc-gateway-nmi.php:594
 #, php-format
 msgid "Gateway Error: %s"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:588 includes/class-wc-gateway-nmi.php:590
+#: includes/class-wc-gateway-nmi.php:597 includes/class-wc-gateway-nmi.php:599
 #, php-format
 msgid "NMI failure reason: %s"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:653 includes/class-wc-gateway-nmi.php:665
+#: includes/class-wc-gateway-nmi.php:662 includes/class-wc-gateway-nmi.php:674
 msgid "There was an error with the gateway response."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:660
+#: includes/class-wc-gateway-nmi.php:669
 #, php-format
 msgid "Unrecognized response from the gateway: %s"
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:670
+#: includes/class-wc-gateway-nmi.php:679
 msgid "Your card has been declined."
 msgstr ""
 
-#: includes/class-wc-gateway-nmi.php:724
+#: includes/class-wc-gateway-nmi.php:733
 #, php-format
 msgid "Refunded %s - Refund ID: %s - Reason: %s"
 msgstr ""
