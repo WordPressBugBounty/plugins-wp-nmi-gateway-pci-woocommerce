@@ -122,6 +122,16 @@ jQuery( function( $ ) {
 					this.clearToken
 				);
 
+			// Theme high multi step checkout
+			$(document.body)
+				.on('step_jumped', function(step) {
+					console.log($('.wc_payment_methods').height());
+					if ( $('.wc_payment_methods').height() > 0 && wc_nmi_form.isNMIChosen() ) {
+						wc_nmi_form.blockPayment();
+						wc_nmi_form.createElements();
+					}
+				});
+
             if ( wc_nmi_form.isNMIChosen() ) {
                 wc_nmi_form.blockPayment();
                 wc_nmi_form.createElements();
