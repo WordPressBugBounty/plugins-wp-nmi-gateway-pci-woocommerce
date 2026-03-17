@@ -314,7 +314,13 @@ jQuery( function( $ ) {
             }
 
 			wc_nmi_form.form.append( "<input type='hidden' class='nmi_js_token' name='nmi_js_token' value='" + response.token + "'/>" );
-            wc_nmi_form.form.append( "<input type='hidden' class='nmi_js_response' name='nmi_js_response' value='" + JSON.stringify(response) + "'/>" );
+			$('<input>').attr({
+				type: 'hidden',
+				class: 'nmi_js_response',
+				name: 'nmi_js_response',
+				value: JSON.stringify(response)
+			}).appendTo(wc_nmi_form.form);
+            //wc_nmi_form.form.append( "<input type='hidden' class='nmi_js_response' name='nmi_js_response' value='" + JSON.stringify(response) + "'/>" );
             wc_nmi_form.form.submit();
 		},
 

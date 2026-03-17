@@ -25,8 +25,8 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 	public $allowed_card_types;
 	public $customer_receipt;
 
-    const NMI_REQUEST_URL_LOGIN = 'https://secure.networkmerchants.com/api/transact.php';
-    const NMI_REQUEST_URL_API_KEYS = 'https://secure.nmi.com/api/transact.php';
+    const NMI_REQUEST_URL_LIVE = 'https://secure.nmi.com/api/transact.php';
+    const NMI_REQUEST_URL_SANDBOX = 'https://sandbox.nmi.com/api/transact.php';
 
 	/**
 	 * Constructor
@@ -250,10 +250,10 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 				'default'     => __( 'Pay with your credit card via NMI.', 'wc-nmi' )
 			),
 			'testmode' => array(
-				'title'       => __( 'Test mode', 'wc-nmi' ),
-				'label'       => __( 'Enable Test Mode', 'wc-nmi' ),
+				'title'       => __( 'Sandbox Mode', 'wc-nmi' ),
+				'label'       => __( 'Place the payment gateway in sandbox mode. This will display test information on the checkout page.', 'wc-nmi' ),
 				'type'        => 'checkbox',
-				'description' => __( 'Place the payment gateway in test mode. This will display test information on the checkout page.', 'wc-nmi' ),
+				'description' => __( '<strong>NOTE: Sandbox mode is not the same as Test mode.</strong> If your login URL says <code>sandbox.nmi.com</code>, check this option. If it says <code>secure.nmi.com</code> leave the option unchecked, even if it is a test account, and no live payments will take place.', 'wc-nmi' ),
 				'default'     => 'yes'
 			),
 			'api_keys' => array(
@@ -415,7 +415,8 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 
         add_filter( 'script_loader_tag', array( $this, 'add_public_key_to_js' ), 10, 2 );
 
-		wp_enqueue_script( 'nmi-collect-js', 'https://secure.nmi.com/token/Collect.js', '', null, true );
+		$collect_js_url = $this->testmode ? 'https://sandbox.nmi.com/token/Collect.js' : 'https://secure.nmi.com/token/Collect.js';
+		wp_enqueue_script( 'nmi-collect-js', $collect_js_url, '', null, true );
 		wp_enqueue_script( 'woocommerce_nmi', plugins_url( 'assets/js/nmi.js', WC_NMI_PCI_MAIN_FILE ), array( 'nmi-collect-js' ), WC_NMI_PCI_VERSION, true );
 
 		wp_localize_script( 'woocommerce_nmi', 'wc_nmi_params', apply_filters( 'wc_nmi_params', $this->javascript_params() ) );
@@ -615,7 +616,7 @@ class WC_Gateway_NMI extends WC_Payment_Gateway_CC {
 
 		$gateway_debug = ( $this->logging && $this->debugging );
 
-        $request_url = $this->api_keys ? self::NMI_REQUEST_URL_API_KEYS : self::NMI_REQUEST_URL_LOGIN;
+		$request_url = $this->testmode ? self::NMI_REQUEST_URL_SANDBOX : self::NMI_REQUEST_URL_LIVE;
 		$request_url = apply_filters( 'wc_nmi_request_url', $request_url );
 
         $auth_params = $this->api_keys ? array( 'security_key' => $this->private_key ) : array(
